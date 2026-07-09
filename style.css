@@ -1,0 +1,1053 @@
+/* ==========================================================================
+   MINECRAFT GRADUATION STYLE SHEET (style.css)
+   ========================================================================== */
+
+/* Phông chữ & Biến CSS */
+:root {
+    --mc-font-pixel: 'Press Start 2P', monospace;
+    --mc-font-heading: 'VT323', monospace;
+    --mc-font-body: 'Lexend', sans-serif;
+
+    /* Màu sắc */
+    --color-bg-menu: #1e1e1e;
+    --color-text-white: #ffffff;
+    --color-text-yellow: #ffff55;
+    --color-text-green: #55ff55;
+    --color-text-blue: #55ffff;
+    --color-text-gray: #aaaaaa;
+    
+    --color-btn-bg: #808080;
+    --color-btn-border-top: #c0c0c0;
+    --color-btn-border-bottom: #404040;
+    --color-btn-hover-bg: #5c8e32;
+    --color-btn-hover-border-top: #86b84a;
+    --color-btn-hover-border-bottom: #3b5c1c;
+
+    --color-sign-wood: #c68a4c;
+    --color-sign-border: #4d2f13;
+    --color-sign-text: #2f1d0b;
+}
+
+/* Reset Cơ bản */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #000;
+    font-family: var(--mc-font-body);
+    color: var(--color-text-white);
+    user-select: none;
+}
+
+/* Các màn hình */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 10;
+}
+
+.screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.05);
+    z-index: 0;
+}
+
+.screen.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+    z-index: 10;
+}
+
+/* ==========================================================================
+   MINECRAFT BUTTON (Giao diện nút bấm đặc trưng)
+   ========================================================================== */
+.mc-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 14px 20px;
+    margin: 6px 0;
+    background-color: var(--color-btn-bg);
+    border: 2px solid #000;
+    box-shadow: inset -2px -2px 0px 0px var(--color-btn-border-bottom),
+                inset 2px 2px 0px 0px var(--color-btn-border-top);
+    color: #e0e0e0;
+    font-family: var(--mc-font-pixel);
+    font-size: 14px;
+    text-shadow: 2px 2px 0px #2a2a2a;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+}
+
+.mc-button:hover {
+    background-color: var(--color-btn-hover-bg);
+    box-shadow: inset -2px -2px 0px 0px var(--color-btn-hover-border-bottom),
+                inset 2px 2px 0px 0px var(--color-btn-hover-border-top);
+    color: var(--color-text-yellow);
+    text-shadow: 2px 2px 0px #1e300a;
+}
+
+.mc-button:active {
+    box-shadow: inset 2px 2px 0px 0px var(--color-btn-border-bottom),
+                inset -2px -2px 0px 0px var(--color-btn-border-top);
+    transform: translateY(1px);
+}
+
+.mc-button.half-width {
+    width: calc(50% - 4px);
+}
+
+.button-row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+/* Nút bấm tròn/icon */
+.mc-button.icon-button {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border-radius: 0;
+    font-size: 20px;
+}
+
+.audio-controls {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 100;
+}
+
+/* ==========================================================================
+   MÀN HÌNH CHÍNH (MAIN MENU)
+   ========================================================================== */
+.menu-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* Panorama Background xoay nhẹ giống màn hình chính Minecraft */
+.panorama-container {
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1607988795691-3d0147b43231?q=80&w=1920'); /* Minecraft themed background placeholder */
+    background-size: cover;
+    background-position: center;
+    filter: blur(2px);
+    animation: panBg 40s linear infinite;
+}
+
+@keyframes panBg {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Lớp phủ pixel tối xung quanh màn hình */
+.dirt-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 20%, rgba(0, 0, 0, 0.7) 100%);
+    pointer-events: none;
+}
+
+.menu-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 460px;
+    height: 85%;
+    padding: 20px;
+    text-align: center;
+}
+
+.title-container {
+    position: relative;
+    margin-top: 40px;
+}
+
+/* Minecraft 3D Text Title */
+.game-title {
+    font-family: var(--mc-font-heading);
+    font-size: 64px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    line-height: 0.9;
+    color: #dedede;
+    text-shadow: 
+        -2px -2px 0 #000,  
+         2px -2px 0 #000,
+        -2px  2px 0 #000,
+         2px  2px 0 #000,
+         3px  5px 0px #3c3c3c,
+         4px  6px 0px #1c1c1c;
+}
+
+.title-line-1 {
+    color: #e2e2e2;
+}
+
+.title-line-2 {
+    color: #ffaa00;
+    font-size: 50px;
+    letter-spacing: -2px;
+}
+
+/* Splash Text màu vàng nhấp nháy đặc trưng */
+.splash-text {
+    position: absolute;
+    bottom: -22px;
+    right: -25px;
+    font-family: var(--mc-font-pixel);
+    font-size: 14px;
+    color: var(--color-text-yellow);
+    text-shadow: 2px 2px 0px #3f3f00;
+    transform: rotate(-20deg);
+    animation: splashPulse 0.5s alternate infinite ease-in-out;
+    white-space: nowrap;
+}
+
+@keyframes splashPulse {
+    0% { transform: rotate(-20deg) scale(0.9); }
+    100% { transform: rotate(-20deg) scale(1.05); }
+}
+
+.menu-buttons {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.menu-footer {
+    display: flex;
+    justify-content: space-between;
+    width: 150%; /* Tràn nhẹ ra hai bên */
+    max-width: 100vw;
+    padding: 0 20px;
+    font-family: var(--mc-font-body);
+    font-size: 12px;
+    color: var(--color-text-gray);
+    text-shadow: 1px 1px 1px #000;
+}
+
+/* ==========================================================================
+   BATTLE SCREEN (Màn hình đấu BOSS)
+   ========================================================================== */
+#screen-battle {
+    background: radial-gradient(circle at center, #1b0a2c 0%, #08030d 100%);
+}
+
+.boss-bar-container {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+    z-index: 20;
+}
+
+.boss-name {
+    font-family: var(--mc-font-pixel);
+    font-size: 12px;
+    color: #ff55ff;
+    text-shadow: 2px 2px 0px #3f003f;
+    margin-bottom: 8px;
+}
+
+.boss-health-bar {
+    width: 100%;
+    height: 14px;
+    background-color: #2b002b;
+    border: 2px solid #000;
+    padding: 1px;
+}
+
+.boss-health-fill {
+    height: 100%;
+    background-color: #ff55ff;
+    border-right: 2px solid #ff00ff;
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.4);
+    transition: width 0.15s ease-out;
+}
+
+#battle-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    cursor: crosshair;
+}
+
+.battle-overlay {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    z-index: 20;
+}
+
+.battle-instruction {
+    font-family: var(--mc-font-pixel);
+    font-size: 11px;
+    color: var(--color-text-white);
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 8px 16px;
+    border: 2px solid #444;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 0px #000;
+    text-align: center;
+}
+
+.battle-stats {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.xp-level {
+    font-family: var(--mc-font-pixel);
+    color: var(--color-text-green);
+    font-size: 18px;
+    text-shadow: 2px 2px 0px #003f00;
+    font-weight: bold;
+}
+
+.xp-bar {
+    flex-grow: 1;
+    height: 10px;
+    background-color: #1a1a1a;
+    border: 1.5px solid #000;
+    padding: 0.5px;
+}
+
+.xp-fill {
+    height: 100%;
+    background-color: var(--color-text-green);
+}
+
+/* ==========================================================================
+   THE END POEM (Chữ cuộn cuối game)
+   ========================================================================== */
+#screen-end-poem {
+    background-color: #000;
+    color: #ffffff;
+    font-family: var(--mc-font-body);
+}
+
+.poem-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    padding: 40px 20px;
+}
+
+.poem-content {
+    width: 100%;
+    max-width: 700px;
+    text-align: left;
+    transform: translateY(100vh);
+    padding-bottom: 100px;
+}
+
+/* Hiệu ứng màu chữ Minecraft Credits */
+.poem-content p {
+    margin-bottom: 30px;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+.poem-content .meta-info {
+    color: var(--color-text-gray);
+    font-family: var(--mc-font-pixel);
+    font-size: 11px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.poem-content .player-msg {
+    color: var(--color-text-blue);
+}
+
+.poem-content .narrator-msg {
+    color: var(--color-text-green);
+}
+
+.poem-content .highlight-msg {
+    color: var(--color-text-yellow);
+    font-weight: bold;
+}
+
+.skip-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: auto;
+    font-size: 10px;
+    padding: 10px 15px;
+    z-index: 30;
+}
+
+/* ==========================================================================
+   CERTIFICATE & CELEBRATION (Bằng khen)
+   ========================================================================== */
+#screen-certificate {
+    background-color: #0b0514;
+    overflow-y: auto;
+    padding: 40px 15px;
+}
+
+.celebrate-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.fireworks-canvas-container {
+    width: 100%;
+    height: 100%;
+}
+
+#fireworks-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.certificate-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    z-index: 5;
+}
+
+/* Thẻ Bằng tốt nghiệp Pixel cực chất */
+.diploma-card {
+    width: 100%;
+    background-color: #e5d3b3;
+    border: 8px double #4d2f13;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8),
+                0 0 20px rgba(255, 170, 0, 0.2);
+    color: #2f1d0b;
+    padding: 8px;
+    transform: rotate(0.5deg);
+    transition: transform 0.3s ease;
+}
+
+.diploma-card:hover {
+    transform: rotate(0deg) scale(1.01);
+}
+
+.diploma-border {
+    border: 3px solid #8e5824;
+    padding: 30px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.diploma-header {
+    margin-bottom: 25px;
+    width: 100%;
+    border-bottom: 2px dashed #8e5824;
+    padding-bottom: 20px;
+}
+
+.diploma-seal {
+    font-size: 50px;
+    margin-bottom: 10px;
+    filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.2));
+    animation: floatSeal 3s ease-in-out infinite alternate;
+}
+
+@keyframes floatSeal {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-5px); }
+}
+
+.diploma-title {
+    font-family: var(--mc-font-pixel);
+    font-size: 20px;
+    color: #4d2f13;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+}
+
+.diploma-subtitle {
+    font-family: var(--mc-font-pixel);
+    font-size: 12px;
+    color: #72461c;
+}
+
+.diploma-body {
+    margin-bottom: 30px;
+}
+
+.diploma-certify {
+    font-family: var(--mc-font-pixel);
+    font-size: 16px;
+    font-weight: bold;
+    color: #8c0000;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.diploma-to {
+    font-size: 14px;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.diploma-name {
+    font-family: var(--mc-font-pixel);
+    font-size: 26px;
+    color: #1a0033;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
+    position: relative;
+    display: inline-block;
+}
+
+.diploma-name::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 10%;
+    width: 80%;
+    height: 2px;
+    background-color: #8e5824;
+}
+
+.diploma-major {
+    font-size: 16px;
+    color: #4d2f13;
+    margin-bottom: 8px;
+}
+
+.diploma-grade {
+    font-size: 15px;
+    color: #1c521c;
+}
+
+.diploma-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.sign-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 140px;
+}
+
+.signature {
+    font-family: var(--mc-font-heading);
+    font-size: 32px;
+    color: #3b5998;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #4d2f13;
+    width: 100%;
+    text-align: center;
+    font-style: italic;
+}
+
+.sign-block:nth-child(3) .signature {
+    color: #a00;
+}
+
+.sign-title {
+    font-size: 10px;
+    color: #72461c;
+    margin-top: 5px;
+    text-transform: uppercase;
+}
+
+.date-block {
+    display: flex;
+    flex-direction: column;
+    font-size: 11px;
+    color: #72461c;
+}
+
+.diploma-id {
+    margin-top: 4px;
+    font-family: var(--mc-font-pixel);
+    font-size: 8px;
+    color: #a37243;
+}
+
+.certificate-actions {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Hiệu ứng phát sáng kích thích bấm nút */
+.animate-glow {
+    animation: glowBtn 1.5s infinite alternate;
+}
+
+@keyframes glowBtn {
+    0% { box-shadow: inset -2px -2px 0px 0px var(--color-btn-hover-border-bottom), inset 2px 2px 0px 0px var(--color-btn-hover-border-top), 0 0 5px rgba(85,255,85,0.4); }
+    100% { box-shadow: inset -2px -2px 0px 0px var(--color-btn-hover-border-bottom), inset 2px 2px 0px 0px var(--color-btn-hover-border-top), 0 0 15px rgba(85,255,85,0.9); }
+}
+
+/* ==========================================================================
+   MULTIPLAYER / GUESTBOOK (Lưu bút bảng gỗ)
+   ========================================================================== */
+#screen-multiplayer {
+    background-color: #24180f;
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1607988795691-3d0147b43231?q=80&w=1920'); /* Minecraft background */
+    background-size: cover;
+    background-position: center;
+    padding: 30px 15px;
+    overflow-y: auto;
+}
+
+.multiplayer-title {
+    font-family: var(--mc-font-pixel);
+    font-size: 22px;
+    color: var(--color-text-white);
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 0px #000;
+    text-align: center;
+}
+
+.multiplayer-desc {
+    font-size: 14px;
+    color: var(--color-text-gray);
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 0px #000;
+    text-align: center;
+}
+
+.guestbook-split {
+    display: flex;
+    width: 100%;
+    max-width: 900px;
+    gap: 30px;
+    margin-bottom: 30px;
+    align-items: flex-start;
+}
+
+/* Form Nhập Biển Gỗ */
+.guestbook-form-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.mc-wood-sign {
+    position: relative;
+    width: 260px;
+    height: 150px;
+    background-color: var(--color-sign-wood);
+    border: 4px solid var(--color-sign-border);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.5),
+                inset -4px -4px 0px rgba(0,0,0,0.15),
+                inset 4px 4px 0px rgba(255,255,255,0.15);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Tay cầm bảng gỗ */
+.sign-post-handle {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 40px;
+    background-color: var(--color-sign-border);
+    z-index: -1;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+
+.sign-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 5px;
+}
+
+.sign-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: var(--mc-font-pixel);
+    font-size: 10px;
+    color: var(--color-sign-text);
+    text-align: center;
+    padding: 4px;
+}
+
+.sign-input::placeholder {
+    color: rgba(47, 29, 11, 0.5);
+}
+
+.sign-input.textarea {
+    resize: none;
+    height: 70px;
+    font-size: 9px;
+    line-height: 1.4;
+    word-break: break-all;
+}
+
+/* Danh sách Lời Chúc */
+.guestbook-board-wrapper {
+    flex: 1.5;
+    height: 380px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 3px solid #000;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+    padding: 15px;
+    overflow: hidden;
+}
+
+.guestbook-scroll {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+    padding-right: 5px;
+}
+
+/* Custom thanh cuộn */
+.guestbook-scroll::-webkit-scrollbar,
+.poem-wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+.guestbook-scroll::-webkit-scrollbar-track,
+.poem-wrapper::-webkit-scrollbar-track {
+    background: #000;
+}
+.guestbook-scroll::-webkit-scrollbar-thumb,
+.poem-wrapper::-webkit-scrollbar-thumb {
+    background: #555;
+    border: 1px solid #222;
+}
+
+/* Biển gỗ hiển thị kết quả */
+.mc-wood-sign-display {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/10;
+    background-color: var(--color-sign-wood);
+    border: 3px solid var(--color-sign-border);
+    box-shadow: inset -3px -3px 0px rgba(0,0,0,0.15),
+                inset 3px 3px 0px rgba(255,255,255,0.15);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    color: var(--color-sign-text);
+    text-align: center;
+    word-break: break-word;
+    font-family: var(--mc-font-body);
+}
+
+.sign-display-name {
+    font-family: var(--mc-font-pixel);
+    font-size: 8px;
+    margin-bottom: 5px;
+    border-bottom: 1px dashed rgba(47, 29, 11, 0.3);
+    width: 100%;
+    padding-bottom: 2px;
+    text-transform: uppercase;
+}
+
+.sign-display-message {
+    font-size: 11px;
+    line-height: 1.3;
+    font-weight: 500;
+    overflow-y: auto;
+    max-height: 52px;
+    width: 100%;
+}
+
+.sign-display-date {
+    position: absolute;
+    bottom: 2px;
+    font-size: 8px;
+    color: rgba(47, 29, 11, 0.6);
+}
+
+.back-btn {
+    width: auto !important;
+    padding: 12px 30px !important;
+    margin-top: 10px;
+}
+
+/* ==========================================================================
+   MODAL TÙY CHỌN (Options Modal)
+   ========================================================================== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.mc-panel {
+    background-color: #2d2d2d;
+    border: 4px solid #5a5a5a;
+    box-shadow: inset -4px -4px 0px #1a1a1a,
+                inset 4px 4px 0px #8a8a8a,
+                0 15px 30px rgba(0,0,0,0.8);
+    padding: 25px;
+    width: 90%;
+    max-width: 400px;
+    color: #e0e0e0;
+}
+
+.modal-title {
+    font-family: var(--mc-font-pixel);
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--color-text-white);
+    text-shadow: 2px 2px 0px #000;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.option-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.option-row label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-text-gray);
+}
+
+/* ==========================================================================
+   END PORTAL ANIMATION (Hiệu ứng chuyển màn)
+   ========================================================================== */
+#portal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0c0214;
+    z-index: 9999;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+}
+
+#portal-overlay.hidden {
+    opacity: 0;
+}
+
+/* Tạo ngôi sao rơi chớp tắt */
+.portal-starfield {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 150px 50px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 80px 220px, #da70d6, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 300px 120px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 250px 350px, #8a2be2, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 450px 200px, #fff, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 500px 500px;
+    opacity: 0.8;
+    animation: starFlicker 3s infinite alternate;
+}
+
+@keyframes starFlicker {
+    0% { opacity: 0.4; }
+    100% { opacity: 0.9; }
+}
+
+.portal-vortex {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200vmax;
+    height: 200vmax;
+    background: radial-gradient(circle, transparent 10%, #4a0e80 40%, #0d011a 80%);
+    transform: translate(-50%, -50%) rotate(0deg);
+    animation: vortexRotate 4s linear infinite;
+}
+
+@keyframes vortexRotate {
+    0% { transform: translate(-50%, -50%) rotate(0deg) scale(0.1); }
+    50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.1); }
+    100% { transform: translate(-50%, -50%) rotate(360deg) scale(0.1); }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (Tương thích thiết bị)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 40px;
+    }
+    
+    .title-line-2 {
+        font-size: 32px;
+    }
+    
+    .splash-text {
+        font-size: 10px;
+        bottom: -15px;
+        right: -10px;
+    }
+    
+    .menu-content {
+        max-width: 90%;
+        height: 90%;
+    }
+    
+    .menu-footer {
+        flex-direction: column;
+        gap: 5px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .menu-footer .footer-right {
+        text-align: center;
+    }
+
+    .guestbook-split {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .guestbook-board-wrapper {
+        width: 100%;
+        height: 280px;
+    }
+
+    .diploma-border {
+        padding: 15px 15px;
+    }
+
+    .diploma-name {
+        font-size: 18px;
+    }
+
+    .diploma-title {
+        font-size: 14px;
+    }
+
+    .diploma-certify {
+        font-size: 12px;
+    }
+
+    .diploma-footer {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .sign-block {
+        width: 100%;
+    }
+
+    .signature {
+        font-size: 24px;
+        height: 30px;
+        line-height: 30px;
+    }
+
+    .certificate-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trần Nguyễn Minh Thiên - Lễ Tốt Nghiệp | Graduation Day 2026</title>
+    <meta name="description" content="Trang web kỷ niệm lễ tốt nghiệp Cử nhân Công nghệ Thông tin của Trần Nguyễn Minh Thiên tại Đại học An Giang. Hành trình đánh bại Ender Dragon và bước vào thế giới mới.">
+    <meta name="keywords" content="Trần Nguyễn Minh Thiên, Tốt nghiệp, Đại học An Giang, AGU, Công nghệ thông tin, Minecraft, Ender Dragon, The End Poem">
+    <meta name="author" content="Trần Nguyễn Minh Thiên">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Trần Nguyễn Minh Thiên - Lễ Tốt Nghiệp 11.07.2026">
+    <meta property="og:description" content="Goal Reached! The End... Again... Khép lại hành trình 4 năm Đại học và khởi đầu cuộc phiêu lưu mới.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/username/repo/main/assets/og-image.jpg"> <!-- Sẽ được cập nhật sau khi up git -->
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;700&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Lớp phủ cổng End Portal chuyển cảnh -->
+    <div id="portal-overlay" class="hidden">
+        <div class="portal-starfield"></div>
+        <div class="portal-vortex"></div>
+    </div>
+
+    <!-- Thanh điều khiển âm thanh toàn cục -->
+    <div class="audio-controls">
+        <button id="btn-audio-toggle" class="mc-button icon-button" title="Bật/Tắt âm thanh">
+            <span id="audio-icon">🔈</span>
+        </button>
+    </div>
+
+    <!-- MÀN HÌNH 1: MAIN MENU (Giao diện chính Minecraft) -->
+    <section id="screen-menu" class="screen active">
+        <div class="menu-background">
+            <div class="panorama-container"></div>
+            <div class="dirt-overlay"></div>
+        </div>
+        <div class="menu-content">
+            <div class="title-container">
+                <h1 class="game-title">
+                    <span class="title-line-1">MINH THIÊN</span>
+                    <span class="title-line-2">GRADUATION EDITION</span>
+                </h1>
+                <div class="splash-text" id="splash-text">Loading adventure...</div>
+            </div>
+            
+            <div class="menu-buttons">
+                <button id="btn-singleplayer" class="mc-button">
+                    <span class="btn-text">Singleplayer (Hành Trình)</span>
+                </button>
+                <button id="btn-multiplayer" class="mc-button">
+                    <span class="btn-text">Multiplayer (Lời Chúc)</span>
+                </button>
+                <div class="button-row">
+                    <button id="btn-options" class="mc-button half-width">
+                        <span class="btn-text">Tùy Chọn</span>
+                    </button>
+                    <button id="btn-quit" class="mc-button half-width">
+                        <span class="btn-text">Thoát Game</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="menu-footer">
+                <div class="footer-left">Minecraft: Phiên bản Tốt nghiệp 11.07.2026</div>
+                <div class="footer-right">Bản quyền &copy; Trần Nguyễn Minh Thiên. AGU</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MÀN HÌNH 2: BATTLE SCREEN (Trận chiến Ender Dragon) -->
+    <section id="screen-battle" class="screen hidden">
+        <div class="boss-bar-container">
+            <div class="boss-name">Ender Dragon (Deadline & Đồ Án)</div>
+            <div class="boss-health-bar">
+                <div id="boss-health-current" class="boss-health-fill" style="width: 100%;"></div>
+            </div>
+        </div>
+        
+        <canvas id="battle-canvas"></canvas>
+
+        <div class="battle-overlay">
+            <div class="battle-instruction" id="battle-inst">Nhấp chuột liên tục để ném Ngọc Ender tiêu diệt Deadline!</div>
+            <div class="battle-stats">
+                <span class="xp-level">Lvl 26</span>
+                <div class="xp-bar">
+                    <div class="xp-fill" style="width: 80%;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MÀN HÌNH 3: THE END POEM (Cuộn chữ kết thúc game) -->
+    <section id="screen-end-poem" class="screen hidden">
+        <div class="poem-wrapper">
+            <div class="poem-content" id="poem-content">
+                <!-- Nội dung chữ cuộn sẽ được đưa vào bằng JS để dễ tùy chỉnh -->
+            </div>
+            <button id="btn-skip-poem" class="mc-button skip-button">
+                <span class="btn-text">Bỏ qua (Esc)</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- MÀN HÌNH 4: CERTIFICATE & FINALE (Bằng tốt nghiệp & Chúc mừng) -->
+    <section id="screen-certificate" class="screen hidden">
+        <div class="celebrate-background">
+            <div class="fireworks-canvas-container">
+                <canvas id="fireworks-canvas"></canvas>
+            </div>
+        </div>
+        
+        <div class="certificate-container">
+            <div class="diploma-card">
+                <div class="diploma-border">
+                    <div class="diploma-header">
+                        <div class="diploma-seal">🎓</div>
+                        <h2 class="diploma-title">ĐẠI HỌC AN GIANG</h2>
+                        <p class="diploma-subtitle">KHOA CÔNG NGHỆ THÔNG TIN</p>
+                    </div>
+                    
+                    <div class="diploma-body">
+                        <p class="diploma-certify">CHỨNG NHẬN TỐT NGHIỆP</p>
+                        <p class="diploma-to">Cấp cho</p>
+                        <h3 class="diploma-name">TRẦN NGUYỄN MINH THIÊN</h3>
+                        <p class="diploma-major">Chuyên ngành: <strong>Cử nhân Công nghệ Thông tin</strong></p>
+                        <p class="diploma-grade">Xếp loại tốt nghiệp: <strong>Xuất Sắc</strong></p>
+                    </div>
+                    
+                    <div class="diploma-footer">
+                        <div class="sign-block">
+                            <span class="signature">Steve</span>
+                            <span class="sign-title">Bạn Đồng Hành</span>
+                        </div>
+                        <div class="date-block">
+                            <span class="diploma-date">Ngày 11 tháng 07 năm 2026</span>
+                            <span class="diploma-id">Mã số hành trình: MC-2026-FIT</span>
+                        </div>
+                        <div class="sign-block">
+                            <span class="signature">Dragon</span>
+                            <span class="sign-title">Đã bị đánh bại</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="certificate-actions">
+                <button id="btn-go-guestbook" class="mc-button animate-glow">
+                    <span class="btn-text">Xem Lời Chúc (Multiplayer)</span>
+                </button>
+                <button id="btn-replay" class="mc-button">
+                    <span class="btn-text">Chơi Lại Từ Đầu</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- MÀN HÌNH 5: MULTIPLAYER / GUESTBOOK (Lưu bút bảng gỗ) -->
+    <section id="screen-multiplayer" class="screen hidden">
+        <div class="multiplayer-background"></div>
+        <div class="guestbook-container">
+            <h2 class="multiplayer-title">Multiplayer - Bảng Lưu Bút</h2>
+            <p class="multiplayer-desc">Hãy cắm một chiếc bảng gỗ (Sign) để gửi lời chúc tốt đẹp nhất đến Minh Thiên nhé!</p>
+            
+            <div class="guestbook-split">
+                <!-- Form nhập lời chúc -->
+                <div class="guestbook-form-card">
+                    <div class="mc-wood-sign">
+                        <div class="sign-input-wrapper">
+                            <input type="text" id="guestbook-name" class="sign-input" placeholder="Tên của bạn..." maxlength="20" required>
+                            <textarea id="guestbook-message" class="sign-input textarea" placeholder="Viết lời chúc tại đây (tối đa 80 ký tự)..." maxlength="80" required></textarea>
+                        </div>
+                        <span class="sign-post-handle"></span>
+                    </div>
+                    <button id="btn-submit-wish" class="mc-button">
+                        <span class="btn-text">Cắm Bảng Lời Chúc</span>
+                    </button>
+                </div>
+                
+                <!-- Danh sách bảng lời chúc -->
+                <div class="guestbook-board-wrapper">
+                    <div class="guestbook-scroll" id="wishes-list">
+                        <!-- Lời chúc sẽ được load tại đây bằng JS -->
+                    </div>
+                </div>
+            </div>
+
+            <button id="btn-back-menu" class="mc-button back-btn">
+                <span class="btn-text">Quay Lại Menu Chính</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Cửa sổ Tùy Chọn (Options Modal) -->
+    <div id="options-modal" class="modal hidden">
+        <div class="modal-content mc-panel">
+            <h2 class="modal-title">TÙY CHỌN GAME</h2>
+            
+            <div class="modal-body">
+                <div class="option-row">
+                    <label>Âm Thanh Game:</label>
+                    <button id="btn-toggle-sound-opt" class="mc-button option-btn">
+                        <span class="btn-text">Âm Thanh: BẬT</span>
+                    </button>
+                </div>
+                <div class="option-row">
+                    <label>Nhạc Nền Synth:</label>
+                    <button id="btn-toggle-music-opt" class="mc-button option-btn">
+                        <span class="btn-text">Nhạc Nền: TẮT</span>
+                    </button>
+                </div>
+                <div class="option-row">
+                    <label>Góc Nhìn Steve:</label>
+                    <button id="btn-toggle-skin" class="mc-button option-btn">
+                        <span class="btn-text">Skin: Cử Nhân Mũ Đen</span>
+                    </button>
+                </div>
+            </div>
+
+            <button id="btn-close-options" class="mc-button">
+                <span class="btn-text">Xong</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Trình phát âm thanh ẩn cho nhạc nền nếu cần, ở đây ta ưu tiên tự tổng hợp bằng Web Audio API -->
+    <script src="script.js"></script>
+</body>
+</html>
